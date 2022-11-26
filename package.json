@@ -40,13 +40,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/saikat-samanta/react-native-advance-components",
-  "author": "saikat-samanta <saikatsamanta737@gmail.com> (https://github.com/saikat-samanta)",
+  "repository": "https://github.com/at-syntax/react-native-advance-components",
+  "author": "at-syntax <admin@atsyntax.com> (https://github.com/at-syntax)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saikat-samanta/react-native-advance-components/issues"
+    "url": "https://github.com/at-syntax/react-native-advance-components/issues"
   },
-  "homepage": "https://github.com/saikat-samanta/react-native-advance-components#readme",
+  "homepage": "https://github.com/at-syntax/react-native-advance-components#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
