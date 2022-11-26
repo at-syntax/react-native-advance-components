@@ -17,33 +17,29 @@ jobs:
     executor: default
     steps:
       - checkout
-      - when:
-          condition:
-            equal: [master, << pipeline.git.branch >>]
-          steps:
-            - attach_project
-            - restore_cache:
-                keys:
-                  - dependencies-{{ checksum "package.json" }}
-                  - dependencies-
-            - restore_cache:
-                keys:
-                  - dependencies-example-{{ checksum "example/package.json" }}
-                  - dependencies-example-
-            - run:
-                name: Install dependencies
-                command: |
-                  yarn install --cwd example --frozen-lockfile
-                  yarn install --frozen-lockfile
-            - save_cache:
-                key: dependencies-{{ checksum "package.json" }}
-                paths: ['node_modules']
-            - save_cache:
-                key: dependencies-example-{{ checksum "example/package.json" }}
-                paths: ['example/node_modules']
-            - persist_to_workspace:
-                root: .
-                paths: ['.']
+      - attach_project
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - restore_cache:
+          keys:
+            - dependencies-example-{{ checksum "example/package.json" }}
+            - dependencies-example-
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --cwd example --frozen-lockfile
+            yarn install --frozen-lockfile
+      - save_cache:
+          key: dependencies-{{ checksum "package.json" }}
+          paths: [node_modules]
+      - save_cache:
+          key: dependencies-example-{{ checksum "example/package.json" }}
+          paths: [example/node_modules]
+      - persist_to_workspace:
+          root: .
+          paths: [.]
 
   lint:
     executor: default
@@ -86,6 +82,8 @@ jobs:
 
 workflows:
   build-and-test:
+    when:
+      equal: [master, << pipeline.git.branch >>]
     jobs:
       - install-dependencies
       - lint:
