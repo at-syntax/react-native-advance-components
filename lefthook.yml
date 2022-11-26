@@ -4,7 +4,6 @@ pre-commit:
     check-branch:
       run: sh ./protectBranch.sh
     lint:
-      files: git diff --cached --name-only
       glob: '*.{js,ts,jsx,tsx}'
       run: npx eslint {staged_files}
     types:
