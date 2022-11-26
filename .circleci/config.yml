@@ -15,10 +15,13 @@ commands:
 jobs:
   install-dependencies:
     executor: default
-    branches:
-      only: master
     steps:
       - checkout
+      - when:
+          condition:
+            equal: [master, << pipeline.git.branch >>]
+          steps:
+            - run: echo "I am on master"
       - attach_project
       - restore_cache:
           keys:
