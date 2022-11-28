@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 import { Center, IconButton } from '../../components';
+import { top } from '../../utils/platformSpecific';
+import { RNAdvanceComponentContext } from '../../context';
 import type { ColorValue } from 'react-native';
 
 export interface ImageViewerModalProps {
@@ -26,11 +28,16 @@ export class ImageViewerModal extends React.Component<
   ImageViewerModalProps,
   ImageViewerModalStateType
 > {
+  static contextType = RNAdvanceComponentContext;
+  // @ts-ignore
+  context!: React.ContextType<typeof RNAdvanceComponentContext>;
+
   private childRef: React.RefObject<{
     _internalFiberInstanceHandleDEV: {
       memoizedProps: any;
     };
   }>;
+
   constructor(props: ImageViewerModalProps) {
     super(props);
 
@@ -101,11 +108,13 @@ export class ImageViewerModal extends React.Component<
               onLoadStart={() => this.setState({ isLoading: true })}
               onLoadEnd={() => this.setState({ isLoading: false })}
             />
-            <IconButton
-              onPress={this.handleClose}
-              color={color}
-              defaultIconColor={defaultIconColor}
-            />
+            <View style={[styles.closeIconContainer, { top: top }]}>
+              <IconButton
+                onPress={this.handleClose}
+                color={color}
+                defaultIconColor={defaultIconColor}
+              />
+            </View>
           </View>
         </Modal>
         <TouchableOpacity onPress={this.handleClick}>
@@ -137,4 +146,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  closeIconContainer: { position: 'absolute', right: 4 },
 });

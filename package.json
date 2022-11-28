@@ -123,7 +123,11 @@
           "trailingComma": "es5",
           "useTabs": false
         }
-      ]
+      ],
+      "no-console": "warn",
+      "no-unused-vars": "error",
+      "no-unused-expressions": "error",
+      "react-native/no-inline-styles": "off"
     }
   },
   "eslintIgnore": [

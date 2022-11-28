@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import type { ColorValue, GestureResponderEvent } from 'react-native';
+import { unicode } from '../../utils';
 
 interface IconButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
@@ -29,7 +30,7 @@ export class IconButton extends Component<
       >
         {icon ?? (
           <Text style={[styles.text, { color: defaultIconColor }]}>
-            {'\u0058'}
+            {unicode.close}
           </Text>
         )}
       </TouchableOpacity>
@@ -45,12 +46,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     overflow: 'hidden',
-    position: 'absolute',
-    top: 4,
-    right: 4,
   },
   text: {
-    fontSize: 20,
+    fontSize: 36,
     fontWeight: '500',
   },
 });

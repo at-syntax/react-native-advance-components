@@ -20,3 +20,4 @@ export function multiply(a: number, b: number): Promise<number> {
 } */
 
 export * from './modules';
+export * from './context';
