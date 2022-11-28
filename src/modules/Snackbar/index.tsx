@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
-import type { GestureResponderEvent } from 'react-native';
-import { top } from '../../utils/platformSpecific';
+import type { GestureResponderEvent, ViewStyle } from 'react-native';
+import { top, unicode } from '../../utils';
 import { IconButton } from '../../components';
 
 export type SnackbarProps = typeof Snackbar.defaultProps & {
@@ -12,6 +12,7 @@ export type SnackbarProps = typeof Snackbar.defaultProps & {
   autoHideDuration?: number;
   anchorOrigin?: 'top' | 'bottom';
   onClose?: (event?: GestureResponderEvent) => void;
+  variant?: 'solid' | 'left-accent' | 'top-accent' | 'outline';
 };
 
 interface SnackbarStateTypes {
@@ -22,13 +23,14 @@ const statusColorMap: Record<
   SnackbarProps['status'],
   {
     color: string;
+    lightBg: string;
     icon: string;
   }
 > = {
-  success: { color: 'green', icon: '☑' },
-  error: { color: 'red', icon: '⨯' },
-  info: { color: 'blue', icon: 'ℹ' },
-  warning: { color: 'orange', icon: '⚠' },
+  success: { color: 'green', lightBg: '#8aca89', icon: unicode.success },
+  error: { color: 'red', lightBg: '#ff8484', icon: unicode.error },
+  info: { color: 'blue', lightBg: '#6f87ff', icon: unicode.info },
+  warning: { color: 'orange', lightBg: '#ffd374', icon: unicode.warning },
 };
 
 export class Snackbar extends React.Component<
@@ -38,6 +40,7 @@ export class Snackbar extends React.Component<
   static defaultProps = {
     anchorOrigin: 'top',
     autoHideDuration: 3000,
+    variant: 'solid',
   };
 
   private timeout: NodeJS.Timeout | null = null;
@@ -105,8 +108,36 @@ export class Snackbar extends React.Component<
     }
   }
 
+  private generateColor(
+    variant: SnackbarProps['variant'],
+    status: SnackbarProps['status']
+  ): ViewStyle {
+    switch (variant) {
+      case 'solid':
+        return { backgroundColor: statusColorMap[status].color };
+      case 'left-accent':
+        return {
+          backgroundColor: statusColorMap[status].lightBg,
+          borderColor: statusColorMap[status].color,
+          borderLeftWidth: 5,
+        };
+      case 'top-accent':
+        return {
+          backgroundColor: statusColorMap[status].lightBg,
+          borderColor: statusColorMap[status].color,
+          borderTopWidth: 5,
+        };
+      case 'outline':
+        return { borderColor: statusColorMap[status].color, borderWidth: 2 };
+
+      default:
+        return { backgroundColor: statusColorMap[status].color };
+    }
+  }
+
   render() {
-    const { isVisible, message, status, anchorOrigin, onClose } = this.props;
+    const { isVisible, message, status, anchorOrigin, onClose, variant } =
+      this.props;
 
     return (
       <Animated.View
@@ -130,10 +161,7 @@ export class Snackbar extends React.Component<
         ]}
       >
         <View
-          style={[
-            styles.messageContainer,
-            { backgroundColor: statusColorMap[status].color },
-          ]}
+          style={[styles.messageContainer, this.generateColor(variant, status)]}
         >
           <View style={styles.messageSection}>
             <Text style={styles.iconStyle}>{statusColorMap[status].icon}</Text>
@@ -177,10 +205,8 @@ const styles = StyleSheet.create({
   iconStyle: {
     fontSize: 26,
     margin: 5,
-    color: 'white',
   },
   text: {
     flex: 1,
-    color: 'white',
   },
 });

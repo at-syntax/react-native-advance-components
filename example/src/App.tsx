@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ImageViewerModalDemo } from './components/ImageViewerModalDemo';
+// import { ImageViewerModalDemo } from './components/ImageViewerModalDemo';
+import { SnackbarDemo } from './components/SnackbarDemo';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImageViewerModalDemo />
+      <SnackbarDemo />
     </View>
   );
 }
