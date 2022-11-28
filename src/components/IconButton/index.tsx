@@ -40,15 +40,15 @@ export class IconButton extends Component<
 
 const styles = StyleSheet.create({
   root: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
     overflow: 'hidden',
   },
   text: {
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: '500',
   },
 });

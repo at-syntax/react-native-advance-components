@@ -123,7 +123,6 @@ export class ImageViewerModal extends React.Component<
                 backgroundColor: backgroundColor,
               },
             ]}
-            {...this._panResponder.panHandlers}
           >
             {(this.state.isLoading ||
               !this.childRef.current?._internalFiberInstanceHandleDEV
@@ -135,6 +134,7 @@ export class ImageViewerModal extends React.Component<
             <Image
               style={[styles.image]}
               resizeMode="contain"
+              {...this._panResponder.panHandlers}
               source={
                 this.childRef.current?._internalFiberInstanceHandleDEV
                   ?.memoizedProps?.source

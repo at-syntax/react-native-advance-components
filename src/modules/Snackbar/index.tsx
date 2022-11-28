@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     fontSize: 26,
     margin: 5,
+    marginRight: 10,
   },
   text: {
     flex: 1,
