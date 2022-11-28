@@ -28,9 +28,7 @@ export class IconButton extends Component<
         style={[styles.root, { backgroundColor: color }]}
       >
         {icon ?? (
-          <Text style={[styles.text, { color: defaultIconColor }]}>
-            {'\u0058'}
-          </Text>
+          <Text style={[styles.text, { color: defaultIconColor }]}>⨯</Text>
         )}
       </TouchableOpacity>
     );
@@ -45,12 +43,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     overflow: 'hidden',
-    position: 'absolute',
-    top: 4,
-    right: 4,
   },
   text: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: '500',
   },
 });
