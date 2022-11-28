@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Center, IconButton } from '../../components';
 import { top } from '../../utils/platformSpecific';
+import { RNAdvanceComponentContext } from '../../context';
 import type { ColorValue } from 'react-native';
 
 export interface ImageViewerModalProps {
@@ -27,6 +28,10 @@ export class ImageViewerModal extends React.Component<
   ImageViewerModalProps,
   ImageViewerModalStateType
 > {
+  static contextType = RNAdvanceComponentContext;
+  // @ts-ignore
+  context!: React.ContextType<typeof RNAdvanceComponentContext>;
+
   private childRef: React.RefObject<{
     _internalFiberInstanceHandleDEV: {
       memoizedProps: any;

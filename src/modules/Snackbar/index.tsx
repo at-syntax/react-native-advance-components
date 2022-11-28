@@ -1,8 +1,10 @@
 import React from 'react';
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
-import type { GestureResponderEvent, ViewStyle } from 'react-native';
-import { top, unicode } from '../../utils';
+import { generateColor, statusColorMap } from './utils';
+import { top } from '../../utils';
 import { IconButton } from '../../components';
+import { RNAdvanceComponentContext } from '../../context';
+import type { GestureResponderEvent } from 'react-native';
 
 export type SnackbarProps = typeof Snackbar.defaultProps & {
   isVisible: boolean;
@@ -12,26 +14,17 @@ export type SnackbarProps = typeof Snackbar.defaultProps & {
   autoHideDuration?: number;
   anchorOrigin?: 'top' | 'bottom';
   onClose?: (event?: GestureResponderEvent) => void;
-  variant?: 'solid' | 'left-accent' | 'top-accent' | 'outline';
+  variant?:
+    | 'solid'
+    | 'left-accent'
+    | 'top-accent'
+    | 'bottom-accent'
+    | 'outline';
 };
 
 interface SnackbarStateTypes {
   opacity: Animated.Value;
 }
-
-const statusColorMap: Record<
-  SnackbarProps['status'],
-  {
-    color: string;
-    lightBg: string;
-    icon: string;
-  }
-> = {
-  success: { color: 'green', lightBg: '#8aca89', icon: unicode.success },
-  error: { color: 'red', lightBg: '#ff8484', icon: unicode.error },
-  info: { color: 'blue', lightBg: '#6f87ff', icon: unicode.info },
-  warning: { color: 'orange', lightBg: '#ffd374', icon: unicode.warning },
-};
 
 export class Snackbar extends React.Component<
   SnackbarProps,
@@ -42,6 +35,10 @@ export class Snackbar extends React.Component<
     autoHideDuration: 3000,
     variant: 'solid',
   };
+
+  static contextType = RNAdvanceComponentContext;
+  // @ts-ignore
+  context!: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private timeout: NodeJS.Timeout | null = null;
   private windowDimensions = Dimensions.get('window');
@@ -108,36 +105,10 @@ export class Snackbar extends React.Component<
     }
   }
 
-  private generateColor(
-    variant: SnackbarProps['variant'],
-    status: SnackbarProps['status']
-  ): ViewStyle {
-    switch (variant) {
-      case 'solid':
-        return { backgroundColor: statusColorMap[status].color };
-      case 'left-accent':
-        return {
-          backgroundColor: statusColorMap[status].lightBg,
-          borderColor: statusColorMap[status].color,
-          borderLeftWidth: 5,
-        };
-      case 'top-accent':
-        return {
-          backgroundColor: statusColorMap[status].lightBg,
-          borderColor: statusColorMap[status].color,
-          borderTopWidth: 5,
-        };
-      case 'outline':
-        return { borderColor: statusColorMap[status].color, borderWidth: 2 };
-
-      default:
-        return { backgroundColor: statusColorMap[status].color };
-    }
-  }
-
   render() {
     const { isVisible, message, status, anchorOrigin, onClose, variant } =
       this.props;
+    const theme = this.context;
 
     return (
       <Animated.View
@@ -160,17 +131,37 @@ export class Snackbar extends React.Component<
           },
         ]}
       >
-        <View
-          style={[styles.messageContainer, this.generateColor(variant, status)]}
-        >
+        <View style={[styles.messageContainer, generateColor(variant, status)]}>
           <View style={styles.messageSection}>
-            <Text style={styles.iconStyle}>{statusColorMap[status].icon}</Text>
-            <Text style={styles.text}>
-              {message.substring(0, 130)}
-              {message.length > 130 && '...'}
+            <Text
+              style={[
+                styles.iconStyle,
+                {
+                  color:
+                    variant !== 'solid'
+                      ? statusColorMap[status].color
+                      : 'white',
+                },
+              ]}
+            >
+              {statusColorMap[status].icon}
+            </Text>
+            <Text
+              style={[
+                styles.text,
+                {
+                  color: variant !== 'solid' ? theme.colors.text : 'white',
+                },
+              ]}
+              numberOfLines={3}
+            >
+              {message}
             </Text>
           </View>
-          <IconButton onPress={onClose} />
+          <IconButton
+            onPress={onClose}
+            defaultIconColor={variant !== 'solid' ? theme.colors.text : 'white'}
+          />
         </View>
       </Animated.View>
     );
@@ -179,7 +170,7 @@ export class Snackbar extends React.Component<
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: 60,
+    maxHeight: 70,
     minHeight: 50,
     marginHorizontal: 5,
     borderRadius: 5,
@@ -208,5 +199,6 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
+    fontSize: 15,
   },
 });
