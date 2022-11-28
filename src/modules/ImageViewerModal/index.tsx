@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
-  Platform,
 } from 'react-native';
 import { Center, IconButton } from '../../components';
+import { top } from '../../utils/platformSpecific';
 import type { ColorValue } from 'react-native';
 
 export interface ImageViewerModalProps {
@@ -32,11 +32,6 @@ export class ImageViewerModal extends React.Component<
       memoizedProps: any;
     };
   }>;
-
-  private topValue = Platform.select({
-    android: 5,
-    ios: 40,
-  });
 
   constructor(props: ImageViewerModalProps) {
     super(props);
@@ -108,7 +103,7 @@ export class ImageViewerModal extends React.Component<
               onLoadStart={() => this.setState({ isLoading: true })}
               onLoadEnd={() => this.setState({ isLoading: false })}
             />
-            <View style={[styles.closeIconContainer, { top: this.topValue }]}>
+            <View style={[styles.closeIconContainer, { top: top }]}>
               <IconButton
                 onPress={this.handleClose}
                 color={color}

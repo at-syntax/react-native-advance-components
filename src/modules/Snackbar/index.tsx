@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  Animated,
-  Dimensions,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
+import { top } from '../../utils/platformSpecific';
 import { IconButton } from '../../components';
 
 export type SnackbarProps = typeof Snackbar.defaultProps & {
@@ -55,11 +49,6 @@ export class Snackbar extends React.Component<
       opacity: new Animated.Value(0),
     };
   }
-
-  private dropdownTopValue = Platform.select({
-    android: 5,
-    ios: 40,
-  });
 
   private init(): void {
     if (this.props.isVisible === true) {
@@ -125,9 +114,7 @@ export class Snackbar extends React.Component<
           styles.container,
           {
             top:
-              anchorOrigin === 'top'
-                ? this.dropdownTopValue
-                : this.windowDimensions.height - 90,
+              anchorOrigin === 'top' ? top : this.windowDimensions.height - 90,
             opacity: this.state.opacity,
             transform: [
               {
