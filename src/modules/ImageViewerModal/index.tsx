@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  PanResponder,
 } from 'react-native';
 import { Center, IconButton } from '../../components';
 import { top } from '../../utils/platformSpecific';
 import { RNAdvanceComponentContext } from '../../context';
-import type { ColorValue } from 'react-native';
+import type { ColorValue, PanResponderInstance } from 'react-native';
 
 export interface ImageViewerModalProps {
   color?: ColorValue;
@@ -22,6 +23,10 @@ export interface ImageViewerModalProps {
 interface ImageViewerModalStateType {
   _isModalVisible: boolean;
   isLoading: boolean;
+  isZooming: boolean;
+  isMoving: boolean;
+  offsetTop: number;
+  offsetLeft: number;
 }
 
 export class ImageViewerModal extends React.Component<
@@ -29,14 +34,14 @@ export class ImageViewerModal extends React.Component<
   ImageViewerModalStateType
 > {
   static contextType = RNAdvanceComponentContext;
-  // @ts-ignore
-  context!: React.ContextType<typeof RNAdvanceComponentContext>;
+  static context: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private childRef: React.RefObject<{
     _internalFiberInstanceHandleDEV: {
       memoizedProps: any;
     };
   }>;
+  private _panResponder: PanResponderInstance;
 
   constructor(props: ImageViewerModalProps) {
     super(props);
@@ -48,7 +53,35 @@ export class ImageViewerModal extends React.Component<
     this.state = {
       _isModalVisible: false,
       isLoading: false,
+      isZooming: false,
+      isMoving: false,
+      offsetTop: 0,
+      offsetLeft: 0,
     };
+
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderGrant: () => {},
+      onPanResponderMove: (evt) => {
+        const touches = evt.nativeEvent.touches;
+        console.log(
+          touches[0]?.pageX,
+          touches[0]?.pageY,
+          touches[1]?.pageX,
+          touches[1]?.pageY
+        );
+      },
+
+      onPanResponderTerminationRequest: () => true,
+      onPanResponderRelease: (_e, gestureState) => {
+        console.log(gestureState);
+      },
+      onPanResponderTerminate: () => {},
+      onShouldBlockNativeResponder: () => true,
+    });
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -90,6 +123,7 @@ export class ImageViewerModal extends React.Component<
                 backgroundColor: backgroundColor,
               },
             ]}
+            {...this._panResponder.panHandlers}
           >
             {(this.state.isLoading ||
               !this.childRef.current?._internalFiberInstanceHandleDEV
@@ -99,7 +133,7 @@ export class ImageViewerModal extends React.Component<
               </Center>
             )}
             <Image
-              style={styles.image}
+              style={[styles.image]}
               resizeMode="contain"
               source={
                 this.childRef.current?._internalFiberInstanceHandleDEV

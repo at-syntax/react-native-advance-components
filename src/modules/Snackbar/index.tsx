@@ -37,8 +37,7 @@ export class Snackbar extends React.Component<
   };
 
   static contextType = RNAdvanceComponentContext;
-  // @ts-ignore
-  context!: React.ContextType<typeof RNAdvanceComponentContext>;
+  static context: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private timeout: NodeJS.Timeout | null = null;
   private windowDimensions = Dimensions.get('window');

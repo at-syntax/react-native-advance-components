@@ -40,8 +40,8 @@ export class IconButton extends Component<
 
 const styles = StyleSheet.create({
   root: {
-    width: 35,
-    height: 35,
+    width: 50,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
