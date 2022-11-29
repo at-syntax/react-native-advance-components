@@ -44,7 +44,7 @@ export const generateColor = (
     case 'outline':
       return {
         borderColor: statusColorMap[status].color,
-        borderWidth: 2,
+        borderWidth: 3,
       };
 
     default:
