@@ -29,8 +29,6 @@ export class ImageZoomViewer extends React.Component<
   private zoomLastDistance: number | null = null;
   private zoomCurrentDistance = 0;
 
-  private lastTouchStartTime = 0;
-
   private horizontalWholeOuterCounter = 0;
 
   private swipeDownOffset = 0;
@@ -68,7 +66,6 @@ export class ImageZoomViewer extends React.Component<
       this.zoomLastDistance = null;
       this.horizontalWholeCounter = 0;
       this.verticalWholeCounter = 0;
-      this.lastTouchStartTime = new Date().getTime();
       this.isDoubleClick = false;
       this.isLongPress = false;
       this.isHorizontalWrap = false;
@@ -583,8 +580,6 @@ export class ImageZoomViewer extends React.Component<
   }
 
   public render(): React.ReactNode {
-    console.log(this.lastTouchStartTime);
-
     const animateConf = {
       transform: [
         {

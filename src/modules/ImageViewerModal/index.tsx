@@ -18,6 +18,7 @@ export interface ImageViewerModalProps {
   modalAnimationType?: 'none' | 'fade' | 'slide';
   backgroundColor?: ColorValue;
   defaultIconColor?: ColorValue;
+  isZoomEnable?: boolean;
 }
 
 interface ImageViewerModalStateType {
@@ -75,6 +76,7 @@ export class ImageViewerModal extends React.Component<
       backgroundColor = `rgba(0,0,0,0.5)`,
       defaultIconColor,
       color = 'red',
+      isZoomEnable = true,
     } = this.props;
 
     return (
@@ -100,12 +102,25 @@ export class ImageViewerModal extends React.Component<
                 <ActivityIndicator size="large" color={color} />
               </Center>
             )}
-            <ImageZoomViewer
-              cropWidth={this.windowDimension.width}
-              cropHeight={this.windowDimension.height}
-              imageHeight={this.windowDimension.height}
-              imageWidth={this.windowDimension.width}
-            >
+            {isZoomEnable ? (
+              <ImageZoomViewer
+                cropWidth={this.windowDimension.width}
+                cropHeight={this.windowDimension.height}
+                imageHeight={this.windowDimension.height}
+                imageWidth={this.windowDimension.width}
+              >
+                <Image
+                  style={[styles.image]}
+                  resizeMode="contain"
+                  source={
+                    this.childRef.current?._internalFiberInstanceHandleDEV
+                      ?.memoizedProps?.source
+                  }
+                  onLoadStart={() => this.setState({ isLoading: true })}
+                  onLoadEnd={() => this.setState({ isLoading: false })}
+                />
+              </ImageZoomViewer>
+            ) : (
               <Image
                 style={[styles.image]}
                 resizeMode="contain"
@@ -116,7 +131,7 @@ export class ImageViewerModal extends React.Component<
                 onLoadStart={() => this.setState({ isLoading: true })}
                 onLoadEnd={() => this.setState({ isLoading: false })}
               />
-            </ImageZoomViewer>
+            )}
             <View style={[styles.closeIconContainer, { top: top }]}>
               <IconButton
                 onPress={this.handleClose}
