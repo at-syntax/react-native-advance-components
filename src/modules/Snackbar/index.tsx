@@ -17,7 +17,8 @@ export class Snackbar extends React.Component<
   };
 
   static contextType = RNAdvanceComponentContext;
-  static context: React.ContextType<typeof RNAdvanceComponentContext>;
+  // @ts-expect-error
+  context!: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private timeout: NodeJS.Timeout | null = null;
   private windowDimensions = Dimensions.get('window');
@@ -96,6 +97,8 @@ export class Snackbar extends React.Component<
           {
             top:
               anchorOrigin === 'top' ? top : this.windowDimensions.height - 90,
+            backgroundColor:
+              variant === 'outline' ? theme.colors.background : undefined,
             opacity: this.state.opacity,
             transform: [
               {

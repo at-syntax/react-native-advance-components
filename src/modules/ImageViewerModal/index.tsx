@@ -21,7 +21,8 @@ export class ImageViewerModal extends React.Component<
   ImageViewerModalStateType
 > {
   static contextType = RNAdvanceComponentContext;
-  static context: React.ContextType<typeof RNAdvanceComponentContext>;
+  //@ts-expect-error
+  context!: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private childRef: React.RefObject<{
     _internalFiberInstanceHandleDEV: {
