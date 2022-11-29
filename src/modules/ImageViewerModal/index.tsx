@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
-  PanResponder,
+  Dimensions,
 } from 'react-native';
-import { Center, IconButton } from '../../components';
+import { Center, IconButton, ImageZoomViewer } from '../../components';
 import { top } from '../../utils/platformSpecific';
 import { RNAdvanceComponentContext } from '../../context';
-import type { ColorValue, PanResponderInstance } from 'react-native';
+import type { ColorValue } from 'react-native';
 
 export interface ImageViewerModalProps {
   color?: ColorValue;
@@ -23,10 +23,6 @@ export interface ImageViewerModalProps {
 interface ImageViewerModalStateType {
   _isModalVisible: boolean;
   isLoading: boolean;
-  isZooming: boolean;
-  isMoving: boolean;
-  offsetTop: number;
-  offsetLeft: number;
 }
 
 export class ImageViewerModal extends React.Component<
@@ -41,7 +37,8 @@ export class ImageViewerModal extends React.Component<
       memoizedProps: any;
     };
   }>;
-  private _panResponder: PanResponderInstance;
+
+  private windowDimension = Dimensions.get('window');
 
   constructor(props: ImageViewerModalProps) {
     super(props);
@@ -53,35 +50,7 @@ export class ImageViewerModal extends React.Component<
     this.state = {
       _isModalVisible: false,
       isLoading: false,
-      isZooming: false,
-      isMoving: false,
-      offsetTop: 0,
-      offsetLeft: 0,
     };
-
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onStartShouldSetPanResponderCapture: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
-      onPanResponderGrant: () => {},
-      onPanResponderMove: (evt) => {
-        const touches = evt.nativeEvent.touches;
-        console.log(
-          touches[0]?.pageX,
-          touches[0]?.pageY,
-          touches[1]?.pageX,
-          touches[1]?.pageY
-        );
-      },
-
-      onPanResponderTerminationRequest: () => true,
-      onPanResponderRelease: (_e, gestureState) => {
-        console.log(gestureState);
-      },
-      onPanResponderTerminate: () => {},
-      onShouldBlockNativeResponder: () => true,
-    });
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -131,17 +100,23 @@ export class ImageViewerModal extends React.Component<
                 <ActivityIndicator size="large" color={color} />
               </Center>
             )}
-            <Image
-              style={[styles.image]}
-              resizeMode="contain"
-              {...this._panResponder.panHandlers}
-              source={
-                this.childRef.current?._internalFiberInstanceHandleDEV
-                  ?.memoizedProps?.source
-              }
-              onLoadStart={() => this.setState({ isLoading: true })}
-              onLoadEnd={() => this.setState({ isLoading: false })}
-            />
+            <ImageZoomViewer
+              cropWidth={this.windowDimension.width}
+              cropHeight={this.windowDimension.height}
+              imageHeight={this.windowDimension.height}
+              imageWidth={this.windowDimension.width}
+            >
+              <Image
+                style={[styles.image]}
+                resizeMode="contain"
+                source={
+                  this.childRef.current?._internalFiberInstanceHandleDEV
+                    ?.memoizedProps?.source
+                }
+                onLoadStart={() => this.setState({ isLoading: true })}
+                onLoadEnd={() => this.setState({ isLoading: false })}
+              />
+            </ImageZoomViewer>
             <View style={[styles.closeIconContainer, { top: top }]}>
               <IconButton
                 onPress={this.handleClose}
