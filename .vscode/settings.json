@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.packageManager": "yarn",
+  "eslint.run": "onSave",
+  "eslint.workingDirectories": [
+    {
+      "pattern": "./src/"
+    }
+  ],
+  "eslint.alwaysShowStatus": true,
+  "git.pruneOnFetch": true,
+  "editor.tabSize": 2
+}
