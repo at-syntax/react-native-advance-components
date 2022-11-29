@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import type { ColorValue, GestureResponderEvent } from 'react-native';
 import { unicode } from '../../utils';
+import type { IconButtonProps, IconButtonStateTypes } from './index.type';
 
-interface IconButtonProps {
-  onPress?: (event: GestureResponderEvent) => void;
-  icon?: JSX.Element;
-  color?: ColorValue;
-  defaultIconColor?: ColorValue;
-}
-
-interface IconButtonStateTypes {}
-
+/**
+ * ### IconButton
+ * Icon button component.
+ *
+ * ex:
+ * ```ts
+ * <IconButton
+ *    onPress={this.handleClose}
+ *    color={color}
+ *    defaultIconColor={defaultIconColor}
+ *  />
+ * ```
+ */
 export class IconButton extends Component<
   IconButtonProps,
   IconButtonStateTypes

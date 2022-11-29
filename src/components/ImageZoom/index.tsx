@@ -633,5 +633,3 @@ export class ImageZoomViewer extends React.Component<
     );
   }
 }
-
-export * from './index.type';

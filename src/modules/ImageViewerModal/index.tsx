@@ -11,20 +11,10 @@ import {
 import { Center, IconButton, ImageZoomViewer } from '../../components';
 import { top } from '../../utils/platformSpecific';
 import { RNAdvanceComponentContext } from '../../context';
-import type { ColorValue } from 'react-native';
-
-export interface ImageViewerModalProps {
-  color?: ColorValue;
-  modalAnimationType?: 'none' | 'fade' | 'slide';
-  backgroundColor?: ColorValue;
-  defaultIconColor?: ColorValue;
-  isZoomEnable?: boolean;
-}
-
-interface ImageViewerModalStateType {
-  _isModalVisible: boolean;
-  isLoading: boolean;
-}
+import type {
+  ImageViewerModalProps,
+  ImageViewerModalStateType,
+} from './index.type';
 
 export class ImageViewerModal extends React.Component<
   ImageViewerModalProps,

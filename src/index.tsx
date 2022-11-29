@@ -19,6 +19,6 @@ export function multiply(a: number, b: number): Promise<number> {
   return AdvanceComponents.multiply(a, b);
 } */
 
+export { RNAdvanceComponentProvider, Theme } from './context';
 export * from './modules';
 export * from './components';
-export * from './context';

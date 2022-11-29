@@ -1,10 +1,20 @@
 import { StyleSheet, View } from 'react-native';
 import React, { Component } from 'react';
+import type { CenterProps, CenterStateTypes } from './index.type';
 
-interface CenterProps {}
-
-interface CenterStateTypes {}
-
+/**
+ * ### Center
+ * This will make the child vertically and horizontally center.
+ *
+ * ex:
+ * ```ts
+ * <Center>
+ *  <View>
+ *    <Text>This text will be in center</Text>
+ *  </View>
+ * </Center>
+ * ```
+ */
 export class Center extends Component<CenterProps, CenterStateTypes> {
   constructor(props: CenterProps) {
     super(props);

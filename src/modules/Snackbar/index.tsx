@@ -4,27 +4,7 @@ import { generateColor, statusColorMap } from './utils';
 import { top } from '../../utils';
 import { IconButton } from '../../components';
 import { RNAdvanceComponentContext } from '../../context';
-import type { GestureResponderEvent } from 'react-native';
-
-export type SnackbarProps = typeof Snackbar.defaultProps & {
-  isVisible: boolean;
-  status: 'success' | 'error' | 'info' | 'warning';
-  message: string;
-  autoClose?: boolean;
-  autoHideDuration?: number;
-  anchorOrigin?: 'top' | 'bottom';
-  onClose?: (event?: GestureResponderEvent) => void;
-  variant?:
-    | 'solid'
-    | 'left-accent'
-    | 'top-accent'
-    | 'bottom-accent'
-    | 'outline';
-};
-
-interface SnackbarStateTypes {
-  opacity: Animated.Value;
-}
+import type { SnackbarProps, SnackbarStateTypes } from './index.type';
 
 export class Snackbar extends React.Component<
   SnackbarProps,
