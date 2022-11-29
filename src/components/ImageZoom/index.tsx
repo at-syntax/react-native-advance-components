@@ -6,8 +6,17 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import styles from './index.style';
+import type { ViewStyle } from 'react-native';
 import { ICenterOn, ImageZoomProps, ImageZoomState } from './index.type';
+
+const styles = {
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: 'transparent', // fix 0.36 bug, see: https://github.com/facebook/react-native/issues/10782
+  } as ViewStyle,
+};
 
 export class ImageZoomViewer extends React.Component<
   ImageZoomProps,
@@ -624,3 +633,5 @@ export class ImageZoomViewer extends React.Component<
     );
   }
 }
+
+export * from './index.type';
