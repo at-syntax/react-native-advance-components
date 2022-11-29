@@ -6,37 +6,30 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  Dimensions,
 } from 'react-native';
-import { Center, IconButton } from '../../components';
+import { Center, IconButton, ImageZoomViewer } from '../../components';
 import { top } from '../../utils/platformSpecific';
 import { RNAdvanceComponentContext } from '../../context';
-import type { ColorValue } from 'react-native';
-
-export interface ImageViewerModalProps {
-  color?: ColorValue;
-  modalAnimationType?: 'none' | 'fade' | 'slide';
-  backgroundColor?: ColorValue;
-  defaultIconColor?: ColorValue;
-}
-
-interface ImageViewerModalStateType {
-  _isModalVisible: boolean;
-  isLoading: boolean;
-}
+import type {
+  ImageViewerModalProps,
+  ImageViewerModalStateType,
+} from './index.type';
 
 export class ImageViewerModal extends React.Component<
   ImageViewerModalProps,
   ImageViewerModalStateType
 > {
   static contextType = RNAdvanceComponentContext;
-  // @ts-ignore
-  context!: React.ContextType<typeof RNAdvanceComponentContext>;
+  static context: React.ContextType<typeof RNAdvanceComponentContext>;
 
   private childRef: React.RefObject<{
     _internalFiberInstanceHandleDEV: {
       memoizedProps: any;
     };
   }>;
+
+  private windowDimension = Dimensions.get('window');
 
   constructor(props: ImageViewerModalProps) {
     super(props);
@@ -73,6 +66,7 @@ export class ImageViewerModal extends React.Component<
       backgroundColor = `rgba(0,0,0,0.5)`,
       defaultIconColor,
       color = 'red',
+      isZoomEnable = true,
     } = this.props;
 
     return (
@@ -98,16 +92,36 @@ export class ImageViewerModal extends React.Component<
                 <ActivityIndicator size="large" color={color} />
               </Center>
             )}
-            <Image
-              style={styles.image}
-              resizeMode="contain"
-              source={
-                this.childRef.current?._internalFiberInstanceHandleDEV
-                  ?.memoizedProps?.source
-              }
-              onLoadStart={() => this.setState({ isLoading: true })}
-              onLoadEnd={() => this.setState({ isLoading: false })}
-            />
+            {isZoomEnable ? (
+              <ImageZoomViewer
+                cropWidth={this.windowDimension.width}
+                cropHeight={this.windowDimension.height}
+                imageHeight={this.windowDimension.height}
+                imageWidth={this.windowDimension.width}
+              >
+                <Image
+                  style={[styles.image]}
+                  resizeMode="contain"
+                  source={
+                    this.childRef.current?._internalFiberInstanceHandleDEV
+                      ?.memoizedProps?.source
+                  }
+                  onLoadStart={() => this.setState({ isLoading: true })}
+                  onLoadEnd={() => this.setState({ isLoading: false })}
+                />
+              </ImageZoomViewer>
+            ) : (
+              <Image
+                style={[styles.image]}
+                resizeMode="contain"
+                source={
+                  this.childRef.current?._internalFiberInstanceHandleDEV
+                    ?.memoizedProps?.source
+                }
+                onLoadStart={() => this.setState({ isLoading: true })}
+                onLoadEnd={() => this.setState({ isLoading: false })}
+              />
+            )}
             <View style={[styles.closeIconContainer, { top: top }]}>
               <IconButton
                 onPress={this.handleClose}

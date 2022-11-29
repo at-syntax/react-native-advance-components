@@ -4,6 +4,7 @@ import { ImageViewerModal } from 'react-native-advance-components';
 
 export function ImageViewerModalDemo() {
   const ref = React.useRef<ImageViewerModal>(null);
+  const imageRef = React.useRef<Image>(null);
 
   return (
     <View style={styles.container}>
@@ -15,6 +16,7 @@ export function ImageViewerModalDemo() {
         defaultIconColor="black"
       >
         <Image
+          ref={imageRef}
           style={styles.image}
           resizeMode="cover"
           source={{

@@ -1,5 +1,5 @@
 import type { ViewStyle } from 'react-native';
-import type { SnackbarProps } from '.';
+import type { SnackbarProps } from './index.type';
 import { unicode } from '../../utils';
 
 export const statusColorMap: Record<
