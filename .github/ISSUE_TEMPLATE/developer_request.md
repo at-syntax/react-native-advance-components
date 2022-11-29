@@ -1,3 +1,12 @@
+---
+name: Developer request
+about: Issue created by devs only
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 # Issue
 
 #### Title
