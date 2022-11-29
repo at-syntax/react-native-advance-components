@@ -37,6 +37,10 @@ yarn add react-native-advance-components
 Add `RNAdvanceComponentProvider` in your app entry point (generally App.js).
 
 ```ts
+import { RNAdvanceComponentProvider } from 'react-native-advance-components';
+
+// ...
+
 export default function App() {
   const themeMode = useColorScheme();
   return (
