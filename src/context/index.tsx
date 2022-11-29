@@ -1,7 +1,8 @@
 import React from 'react';
+import type { ColorSchemeName } from 'react-native';
 
 export type Theme = {
-  mode: 'light' | 'dark';
+  mode: ColorSchemeName;
   colors: {
     primary: string;
     background: string;
@@ -36,7 +37,7 @@ const darkTheme: Theme = {
   },
 };
 
-const myTheme: Record<Theme['mode'], Theme> = {
+const myTheme: Record<NonNullable<Theme['mode']>, Theme> = {
   light: lightTheme,
   dark: darkTheme,
 };
@@ -45,7 +46,7 @@ export const RNAdvanceComponentContext = React.createContext<Theme>(lightTheme);
 
 type RNAdvanceComponentProviderProps =
   typeof RNAdvanceComponentProvider.defaultProps & {
-    mode?: Theme['mode'];
+    mode: Theme['mode'];
   };
 
 interface RNAdvanceComponentStateTypes {
