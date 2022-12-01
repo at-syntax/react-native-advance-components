@@ -1,7 +1,7 @@
 {
   "name": "react-native-advance-components",
   "version": "0.2.0",
-  "description": "test",
+  "description": "Advance components for react native.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
