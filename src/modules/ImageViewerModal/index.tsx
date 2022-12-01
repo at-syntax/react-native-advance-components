@@ -24,28 +24,33 @@ export class ImageViewerModal extends React.Component<
   //@ts-expect-error
   context!: React.ContextType<typeof RNAdvanceComponentContext>;
 
-  private childRef: React.RefObject<{
-    _internalFiberInstanceHandleDEV: {
-      memoizedProps: any;
-    };
-  }>;
-
   private windowDimension = Dimensions.get('window');
 
   constructor(props: ImageViewerModalProps) {
     super(props);
 
-    this.childRef = React.createRef<{
-      _internalFiberInstanceHandleDEV: { memoizedProps: any };
-    }>();
-
     this.state = {
       _isModalVisible: false,
+      _childProps: undefined,
       isLoading: false,
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount(): void {
+    if (React.Children.count(this.props.children) > 1) {
+      console.error(
+        'More than one child are not allowed inside ImageViewerModal.'
+      );
+    } else {
+      React.Children.forEach<React.ReactNode>(this.props.children, (child) => {
+        this.setState({
+          _childProps: (child as { props: Record<string, unknown> }).props,
+        });
+      });
+    }
   }
 
   public closeModal(callback?: () => void) {
@@ -62,7 +67,6 @@ export class ImageViewerModal extends React.Component<
 
   render() {
     const {
-      children,
       modalAnimationType,
       backgroundColor = `rgba(0,0,0,0.5)`,
       defaultIconColor,
@@ -86,9 +90,7 @@ export class ImageViewerModal extends React.Component<
               },
             ]}
           >
-            {(this.state.isLoading ||
-              !this.childRef.current?._internalFiberInstanceHandleDEV
-                ?.memoizedProps?.source.uri) && (
+            {(this.state.isLoading || !this.state._childProps?.source) && (
               <Center>
                 <ActivityIndicator size="large" color={color} />
               </Center>
@@ -101,24 +103,18 @@ export class ImageViewerModal extends React.Component<
                 imageWidth={this.windowDimension.width}
               >
                 <Image
+                  {...this.state._childProps}
                   style={[styles.image]}
                   resizeMode="contain"
-                  source={
-                    this.childRef.current?._internalFiberInstanceHandleDEV
-                      ?.memoizedProps?.source
-                  }
                   onLoadStart={() => this.setState({ isLoading: true })}
                   onLoadEnd={() => this.setState({ isLoading: false })}
                 />
               </ImageZoomViewer>
             ) : (
               <Image
+                {...this.state._childProps}
                 style={[styles.image]}
                 resizeMode="contain"
-                source={
-                  this.childRef.current?._internalFiberInstanceHandleDEV
-                    ?.memoizedProps?.source
-                }
                 onLoadStart={() => this.setState({ isLoading: true })}
                 onLoadEnd={() => this.setState({ isLoading: false })}
               />
@@ -133,22 +129,7 @@ export class ImageViewerModal extends React.Component<
           </View>
         </Modal>
         <TouchableOpacity onPress={this.handleClick}>
-          {React.Children.map<React.ReactNode, React.ReactNode>(
-            children,
-            (child) => {
-              return React.cloneElement(
-                child as
-                  | React.ReactElement<
-                      any,
-                      string | React.JSXElementConstructor<any>
-                    >
-                  | React.ReactPortal,
-                {
-                  ref: this.childRef,
-                }
-              );
-            }
-          )}
+          <Image {...this.state._childProps} />
         </TouchableOpacity>
       </>
     );
