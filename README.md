@@ -59,10 +59,7 @@ export default function App() {
 
 It will vertically and horizontally center the children element.
 
-<body>
-<div data-snack-id="@saikat737/center-component" data-snack-platform="android" data-snack-preview="true" data-snack-theme="dark" style="overflow:hidden;background:#212121;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
-<script async src="https://snack.expo.dev/embed.js"></script>
-</body>
+- check our [demo](https://snack.expo.dev/@saikat737/center-component)
 
 ```ts
 import { Center } from 'react-native-advance-components';
@@ -80,6 +77,8 @@ export function CenterDemo() {
 ### 2. ImageZoomViewer
 
 It will make you image zoom enable.
+
+- check our [demo](https://snack.expo.dev/@saikat737/imagezoomviewer-component)
 
 ```ts
 import { ImageZoomViewer } from 'react-native-advance-components';
@@ -108,6 +107,8 @@ export function ImageZoomViewerDemo() {
 ## Modules
 
 ### 1. ImageViewerModal
+
+- check our [demo](https://snack.expo.dev/@saikat737/imageviewermodal)
 
 ```ts
 import { ImageViewerModal } from 'react-native-advance-components';
@@ -146,6 +147,8 @@ export function ImageViewer() {
 ```
 
 ### 2. Snackbar
+
+- check our [demo](https://snack.expo.dev/@saikat737/snackbar)
 
 ```ts
 import { Snackbar } from 'react-native-advance-components';
