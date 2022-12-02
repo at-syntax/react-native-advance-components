@@ -10,5 +10,6 @@
   ],
   "eslint.alwaysShowStatus": true,
   "git.pruneOnFetch": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "java.compile.nullAnalysis.mode": "automatic"
 }
