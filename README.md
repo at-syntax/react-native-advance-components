@@ -59,7 +59,7 @@ export default function App() {
 
 It will vertically and horizontally center the children element.
 
-- check our [demo](https://snack.expo.dev/@saikat737/center-component/?target=_blank)
+- check our [demo](https://snack.expo.dev/@saikat737/center-component)
 
 ```ts
 import { Center } from 'react-native-advance-components';
@@ -78,7 +78,7 @@ export function CenterDemo() {
 
 It will make you image zoom enable.
 
-- check our [demo](https://snack.expo.dev/@saikat737/imagezoomviewer-component/?target=_blank)
+- check our [demo](https://snack.expo.dev/@saikat737/imagezoomviewer-component)
 
 ```ts
 import { ImageZoomViewer } from 'react-native-advance-components';
@@ -108,7 +108,7 @@ export function ImageZoomViewerDemo() {
 
 ### 1. ImageViewerModal
 
-- check our [demo](https://snack.expo.dev/@saikat737/imageviewermodal/?target=_blank)
+- check our [demo](https://snack.expo.dev/@saikat737/imageviewermodal)
 
 ```ts
 import { ImageViewerModal } from 'react-native-advance-components';
@@ -148,7 +148,7 @@ export function ImageViewer() {
 
 ### 2. Snackbar
 
-- check our [demo](https://snack.expo.dev/@saikat737/snackbar/?target=_blank)
+- check our [demo](https://snack.expo.dev/@saikat737/snackbar)
 
 ```ts
 import { Snackbar } from 'react-native-advance-components';
