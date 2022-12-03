@@ -1,19 +1,60 @@
-import type { ViewStyle } from 'react-native';
+import React from 'react';
+import type { ViewStyle, ColorValue } from 'react-native';
 import type { SnackbarProps } from './index.type';
-import { unicode } from '../../utils';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+type IconGenerator = {
+  name: string;
+  color?: ColorValue;
+  size?: number;
+};
+
+const IconGenerator = ({ name, color, size }: IconGenerator) => (
+  <Icon
+    name={name}
+    color={color}
+    size={size}
+    style={{ margin: 5, marginRight: 10 }}
+  />
+);
 
 export const statusColorMap: Record<
   SnackbarProps['status'],
   {
     color: string;
     lightBg: string;
-    icon: string;
+    icon: ({
+      color,
+      size,
+    }: {
+      color: IconGenerator['color'];
+      size: IconGenerator['size'];
+    }) => JSX.Element;
   }
 > = {
-  success: { color: 'green', lightBg: '#a7ffa6', icon: unicode.success },
-  error: { color: 'red', lightBg: '#ffa0a0', icon: unicode.error },
-  info: { color: 'blue', lightBg: '#9fafff', icon: unicode.info },
-  warning: { color: 'orange', lightBg: '#ffe2a4', icon: unicode.warning },
+  success: {
+    color: 'green',
+    lightBg: '#a7ffa6',
+    icon: ({ color, size }) =>
+      IconGenerator({ name: 'check-circle', color, size }),
+  },
+  error: {
+    color: 'red',
+    lightBg: '#ffa0a0',
+    icon: ({ color, size }) =>
+      IconGenerator({ name: 'alert-octagon', color, size }),
+  },
+  info: {
+    color: 'blue',
+    lightBg: '#9fafff',
+    icon: ({ color, size }) =>
+      IconGenerator({ name: 'information', color, size }),
+  },
+  warning: {
+    color: 'orange',
+    lightBg: '#ffe2a4',
+    icon: ({ color, size }) => IconGenerator({ name: 'alert', color, size }),
+  },
 };
 
 export const generateColor = (
