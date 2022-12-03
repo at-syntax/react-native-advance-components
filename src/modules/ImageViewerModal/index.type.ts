@@ -1,4 +1,5 @@
-import type { ColorValue, ImageProps } from 'react-native';
+import type { ReactNode } from 'react';
+import type { ColorValue } from 'react-native';
 
 export interface ImageViewerModalProps {
   color?: ColorValue;
@@ -11,5 +12,5 @@ export interface ImageViewerModalProps {
 export interface ImageViewerModalStateType {
   _isModalVisible: boolean;
   isLoading: boolean;
-  _childProps?: ImageProps;
+  _child?: ReactNode;
 }

@@ -31,25 +31,30 @@ export class ImageViewerModal extends React.Component<
 
     this.state = {
       _isModalVisible: false,
-      _childProps: undefined,
+      _child: undefined,
       isLoading: false,
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.getChild = this.getChild.bind(this);
+  }
+
+  getChild() {
+    this.setState({
+      _child: React.Children.only(this.props.children),
+    });
   }
 
   componentDidMount(): void {
-    if (React.Children.count(this.props.children) > 1) {
-      console.error(
-        'More than one child are not allowed inside ImageViewerModal.'
-      );
-    } else {
-      React.Children.forEach<React.ReactNode>(this.props.children, (child) => {
-        this.setState({
-          _childProps: (child as { props: Record<string, unknown> }).props,
-        });
-      });
+    this.getChild();
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<React.PropsWithChildren<ImageViewerModalProps>>
+  ): void {
+    if (prevProps.children !== this.props.children) {
+      this.getChild();
     }
   }
 
@@ -90,7 +95,8 @@ export class ImageViewerModal extends React.Component<
               },
             ]}
           >
-            {(this.state.isLoading || !this.state._childProps?.source) && (
+            {/* @ts-expect-error */}
+            {(this.state.isLoading || !this.state._child?.props.source) && (
               <Center>
                 <ActivityIndicator size="large" color={color} />
               </Center>
@@ -103,7 +109,8 @@ export class ImageViewerModal extends React.Component<
                 imageWidth={this.windowDimension.width}
               >
                 <Image
-                  {...this.state._childProps}
+                  // @ts-expect-error
+                  source={this.state._child?.props.source}
                   style={[styles.image]}
                   resizeMode="contain"
                   onLoadStart={() => this.setState({ isLoading: true })}
@@ -112,7 +119,8 @@ export class ImageViewerModal extends React.Component<
               </ImageZoomViewer>
             ) : (
               <Image
-                {...this.state._childProps}
+                // @ts-expect-error
+                source={this.state._child?.props.source}
                 style={[styles.image]}
                 resizeMode="contain"
                 onLoadStart={() => this.setState({ isLoading: true })}
@@ -129,7 +137,7 @@ export class ImageViewerModal extends React.Component<
           </View>
         </Modal>
         <TouchableOpacity onPress={this.handleClick}>
-          <Image {...this.state._childProps} />
+          {this.state._child}
         </TouchableOpacity>
       </>
     );

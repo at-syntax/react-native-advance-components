@@ -30,6 +30,20 @@ or
 yarn add react-native-advance-components
 ```
 
+We are using `MaterialCommunityIcon` from `react-native-vector-icons`. So, you need to add this package in your project also.
+
+```sh
+npm install react-native-vector-icons
+```
+
+or
+
+```sh
+yarn add react-native-vector-icons
+```
+
+The library has specified dedicated steps for each platform. Please follow their [installation](https://oblador.github.io/react-native-vector-icons/) guide in order to properly use icon fonts.
+
 ## Usage
 
 ### Setup theme

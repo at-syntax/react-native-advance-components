@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { unicode } from '../../utils';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import type { IconButtonProps, IconButtonStateTypes } from './index.type';
 
 /**
@@ -32,11 +32,7 @@ export class IconButton extends Component<
         onPress={onPress}
         style={[styles.root, { backgroundColor: color }]}
       >
-        {icon ?? (
-          <Text style={[styles.text, { color: defaultIconColor }]}>
-            {unicode.close}
-          </Text>
-        )}
+        {icon ?? <Icon name="close" color={defaultIconColor} size={26} />}
       </TouchableOpacity>
     );
   }
@@ -50,9 +46,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     overflow: 'hidden',
-  },
-  text: {
-    fontSize: 28,
-    fontWeight: '500',
   },
 });

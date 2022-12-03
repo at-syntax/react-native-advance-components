@@ -115,19 +115,11 @@ export class Snackbar extends React.Component<
       >
         <View style={[styles.messageContainer, generateColor(variant, status)]}>
           <View style={styles.messageSection}>
-            <Text
-              style={[
-                styles.iconStyle,
-                {
-                  color:
-                    variant !== 'solid'
-                      ? statusColorMap[status].color
-                      : 'white',
-                },
-              ]}
-            >
-              {statusColorMap[status].icon}
-            </Text>
+            {statusColorMap[status].icon({
+              color:
+                variant !== 'solid' ? statusColorMap[status].color : 'white',
+              size: 26,
+            })}
             <Text
               style={[
                 styles.text,
@@ -174,11 +166,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  iconStyle: {
-    fontSize: 26,
-    margin: 5,
-    marginRight: 10,
   },
   text: {
     flex: 1,
