@@ -42,7 +42,7 @@ or
 yarn add react-native-vector-icons
 ```
 
-The library has specified dedicated steps for each platform. Please follow their [installation](https://oblador.github.io/react-native-vector-icons/) guide in order to properly use icon fonts.
+The library has specified dedicated steps for each platform. Please follow their [installation](https://github.com/oblador/react-native-vector-icons#installation) guide in order to properly use icon fonts.
 
 ## Usage
 
