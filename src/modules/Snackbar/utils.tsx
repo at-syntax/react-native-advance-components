@@ -23,6 +23,7 @@ export const statusColorMap: Record<
   {
     color: string;
     lightBg: string;
+    textColor: string;
     icon: ({
       color,
       size,
@@ -35,24 +36,28 @@ export const statusColorMap: Record<
   success: {
     color: 'green',
     lightBg: '#a7ffa6',
+    textColor: '#025e00',
     icon: ({ color, size }) =>
       IconGenerator({ name: 'check-circle', color, size }),
   },
   error: {
     color: 'red',
     lightBg: '#ffa0a0',
+    textColor: '#6b0000',
     icon: ({ color, size }) =>
       IconGenerator({ name: 'alert-octagon', color, size }),
   },
   info: {
     color: 'blue',
     lightBg: '#9fafff',
+    textColor: '#00126e',
     icon: ({ color, size }) =>
       IconGenerator({ name: 'information', color, size }),
   },
   warning: {
     color: 'orange',
     lightBg: '#ffe2a4',
+    textColor: '#5f4100',
     icon: ({ color, size }) => IconGenerator({ name: 'alert', color, size }),
   },
 };

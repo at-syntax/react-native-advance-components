@@ -10,12 +10,12 @@ export function SnackbarDemo() {
       <Button title="Close" onPress={() => setIsVisible(false)} />
       <Snackbar
         isVisible={isVisible}
-        status="success"
+        status="warning"
         message="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type."
         onClose={() => setIsVisible(false)}
         autoClose
         anchorOrigin="top"
-        variant="solid"
+        variant="left-accent"
       />
     </View>
   );

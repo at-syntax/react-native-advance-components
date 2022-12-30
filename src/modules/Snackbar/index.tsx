@@ -124,7 +124,10 @@ export class Snackbar extends React.Component<
               style={[
                 styles.text,
                 {
-                  color: variant !== 'solid' ? theme.colors.text : 'white',
+                  color:
+                    variant === 'solid'
+                      ? '#ffff'
+                      : statusColorMap[status].textColor,
                 },
               ]}
               numberOfLines={3}
@@ -134,7 +137,9 @@ export class Snackbar extends React.Component<
           </View>
           <IconButton
             onPress={onClose}
-            defaultIconColor={variant !== 'solid' ? theme.colors.text : 'white'}
+            defaultIconColor={
+              variant === 'solid' ? '#ffff' : statusColorMap[status].textColor
+            }
           />
         </View>
       </Animated.View>
