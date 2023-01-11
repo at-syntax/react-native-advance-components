@@ -1,4 +1,6 @@
-/* const LINKING_ERROR =
+import { NativeModules, Platform } from 'react-native';
+
+const LINKING_ERROR =
   `The package 'react-native-advance-components' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
@@ -17,7 +19,7 @@ const AdvanceComponents = NativeModules.AdvanceComponents
 
 export function multiply(a: number, b: number): Promise<number> {
   return AdvanceComponents.multiply(a, b);
-} */
+}
 
 export { RNAdvanceComponentProvider, Theme } from './context';
 export * from './modules';
