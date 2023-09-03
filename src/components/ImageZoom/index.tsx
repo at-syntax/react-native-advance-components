@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {
   Animated,
-  LayoutChangeEvent,
+  type LayoutChangeEvent,
   PanResponder,
   StyleSheet,
   View,
 } from 'react-native';
 import type { ViewStyle } from 'react-native';
-import { ICenterOn, ImageZoomProps, ImageZoomState } from './index.type';
+import { type ICenterOn, ImageZoomProps, ImageZoomState } from './index.type';
 
 const styles = {
   container: {

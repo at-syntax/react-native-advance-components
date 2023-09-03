@@ -20,7 +20,7 @@ const AdvanceComponents = NativeModules.AdvanceComponents
 export function multiply(a: number, b: number): Promise<number> {
   return AdvanceComponents.multiply(a, b);
 } */
-
-export { RNAdvanceComponentProvider, Theme } from './context';
+export { RNAdvanceComponentProvider } from './context';
 export * from './modules';
 export * from './components';
+export type { Theme } from './context';
