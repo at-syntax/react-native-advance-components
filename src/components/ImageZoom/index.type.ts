@@ -163,6 +163,8 @@ export class ImageZoomProps {
     event: GestureResponderEvent,
     gestureState: PanResponderGestureState
   ) => boolean = () => false;
+
+  public children?: React.ReactNode;
 }
 
 export class ImageZoomState {

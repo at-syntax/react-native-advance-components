@@ -45,9 +45,10 @@ const myTheme: Record<NonNullable<Theme['mode']>, Theme> = {
 export const RNAdvanceComponentContext = React.createContext<Theme>(lightTheme);
 
 type RNAdvanceComponentProviderProps =
-  typeof RNAdvanceComponentProvider.defaultProps & {
-    mode: Theme['mode'];
-  };
+  typeof RNAdvanceComponentProvider.defaultProps &
+    React.PropsWithChildren<{
+      mode: Theme['mode'];
+    }>;
 
 interface RNAdvanceComponentStateTypes {
   theme: Theme;
