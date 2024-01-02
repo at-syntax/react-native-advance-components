@@ -5,7 +5,10 @@
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
   "files": [
+    "src",
     "lib",
     "android",
     "ios",
@@ -70,7 +73,7 @@
     "react-native": "0.73.1",
     "react-native-builder-bob": "^0.23.2",
     "react-native-vector-icons": "^10.0.3",
-    "release-it": "^15.0.0",
+    "release-it": "^17.0.1",
     "turbo": "^1.10.7",
     "typescript": "^5.0.2"
   },
