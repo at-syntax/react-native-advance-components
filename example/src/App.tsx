@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { StyleSheet, useColorScheme, View } from 'react-native';
 import { RNAdvanceComponentProvider } from 'react-native-advance-components';
 import { ImageViewerModalDemo } from './components/ImageViewerModalDemo';
