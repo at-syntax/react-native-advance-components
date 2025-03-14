@@ -143,14 +143,14 @@ jobs:
         run: |
           # Check for Xcode version
           xcodebuild -version
-          # Install Xcode 15.4 if not already installed
-          if ! xcode-select -p | grep -q "Xcode_15.4"; then
-            echo "Installing Xcode 15.4"
+          # Install Xcode 16.2 if not already installed
+          if ! xcode-select -p | grep -q "Xcode_16.2"; then
+            echo "Installing Xcode 16.2"
             sudo gem install xcode-install
-            xcversion install "15.4"
-            sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer
+            xcversion install "16.2"
+            sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
           else
-            echo "Xcode 15.4 is already installed."
+            echo "Xcode 16.2 is already installed."
           fi
           xcodebuild -version  # Verify that the correct version is being used
 
