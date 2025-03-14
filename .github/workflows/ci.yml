@@ -136,7 +136,7 @@ jobs:
 
       - name: Clean Derived Data
         run: |
-          rm -rf ~/Library/Developer/Xcode/DerivedData
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
           echo "Derived data cleaned."
 
       - name: Restore cocoapods
@@ -155,7 +155,7 @@ jobs:
         run: |
           cd example/ios
           pod deintegrate
-          pod install
+          pod install --repo-update
         env:
           NO_FLIPPER: 1
 
@@ -171,9 +171,3 @@ jobs:
         run: |
           # Increase verbosity for better debugging
           yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}"
-
-      - name: Build iOS directly in Xcode (for debugging)
-        run: |
-          cd example/ios
-          xcodebuild -workspace Example.xcworkspace -scheme Example -sdk iphoneos -configuration Release clean build
-        if: failure() # Run this only if the previous Turborepo build fails
