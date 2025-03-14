@@ -134,21 +134,25 @@ jobs:
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
           fi
 
-      - name: Clean Derived Data
+      - name: Clean Derived Data and CocoaPods Cache
         run: |
           rm -rf ~/Library/Developer/Xcode/DerivedData/*
-          echo "Derived data cleaned."
+          rm -rf ~/Library/Caches/CocoaPods
+          echo "Derived data and CocoaPods caches cleaned."
 
       - name: Install or Switch Xcode version (if needed)
         run: |
           # Check for Xcode version
           xcodebuild -version
-          # Ensure Xcode 15.4 is selected
-          if ! xcode-select -p | grep -q "Xcode_15.4"; then
-            echo "Switching to Xcode 15.4"
-            sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer
+
+          # Install Xcode 16.2 if not already installed
+          if ! xcode-select -p | grep -q "Xcode_16.2"; then
+            echo "Installing Xcode 16.2"
+            sudo gem install xcode-install
+            xcversion install "16.2"
+            sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
           else
-            echo "Xcode 15.4 is already selected."
+            echo "Xcode 16.2 is already selected."
           fi
           xcodebuild -version  # Verify that the correct version is being used
 
@@ -167,6 +171,7 @@ jobs:
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
           cd example/ios
+          pod deintegrate
           pod install --repo-update
         env:
           NO_FLIPPER: 1
@@ -182,4 +187,4 @@ jobs:
       - name: Build example for iOS
         run: |
           # Increase verbosity for better debugging
-          yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}"
+          yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}" -- --verbose
