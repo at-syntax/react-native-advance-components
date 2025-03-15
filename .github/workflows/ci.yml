@@ -182,7 +182,7 @@ jobs:
         with:
           path: |
             **/ios/Pods
-          key: ${{ steps.cocoapods-cache.outputs.cache-key }}
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock', 'example/ios/Podfile') }}
 
       - name: Build example for iOS
         run: |
