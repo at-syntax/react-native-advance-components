@@ -138,6 +138,7 @@ jobs:
         run: |
           rm -rf ~/Library/Developer/Xcode/DerivedData/*
           rm -rf ~/Library/Caches/CocoaPods
+          pod cache clean --all
           echo "Derived data and CocoaPods caches cleaned."
 
       - name: Install or Switch Xcode version (if needed)
@@ -187,4 +188,4 @@ jobs:
       - name: Build example for iOS
         run: |
           # Increase verbosity for better debugging
-          yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}" -- --verbose
+          yarn turbo run build:ios -- --verbose --cache-dir="${{ env.TURBO_CACHE_DIR }}"
