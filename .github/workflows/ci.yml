@@ -125,70 +125,59 @@ jobs:
           key: ${{ runner.os }}-turborepo-ios-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-turborepo-ios-
-
       - name: Check turborepo cache for iOS
         run: |
           TURBO_CACHE_STATUS=$(node -p "($(yarn turbo run build:ios --cache-dir=${{ env.TURBO_CACHE_DIR }} --dry=json)).tasks.find(t => t.task === 'build:ios').cache.status")
           if [[ $TURBO_CACHE_STATUS == "HIT" ]]; then
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
           fi
-
-      - name: Clean Derived Data and CocoaPods Cache
+      - name: Clean Derived Data
         run: |
-          echo "Cleaning DerivedData and CocoaPods cache..."
           rm -rf ~/Library/Developer/Xcode/DerivedData/*
           rm -rf ~/Library/Caches/CocoaPods
           pod cache clean --all
-          echo "Derived data and CocoaPods caches cleaned."
-
+          echo "Derived data cleaned."
       - name: Install or Switch Xcode version (if needed)
         run: |
           # Check for Xcode version
           xcodebuild -version
-          # Install Xcode 16.2 if not already installed
-          if ! xcode-select -p | grep -q "Xcode_16.2"; then
-            echo "Installing Xcode 16.2"
+          # Ensure Xcode 15.4 is selected
+          if ! xcode-select -p | grep -q "Xcode_15.4"; then
+            echo "Installing Xcode 15.4"
             sudo gem install xcode-install
-            xcversion install "16.2"
-            sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
+            xcversion install "15.4"
+            sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer
           else
-            echo "Xcode 16.2 is already selected."
+            echo "Xcode 15.4 is already selected."
           fi
           xcodebuild -version  # Verify that the correct version is being used
-
       - name: Restore cocoapods
         if: env.turbo_cache_hit != 1
         id: cocoapods-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             **/ios/Pods
           key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock', 'example/ios/Podfile') }}
           restore-keys: |
             ${{ runner.os }}-cocoapods-
-
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
           cd example/ios
-          pod deintegrate
           pod install --repo-update
         env:
           NO_FLIPPER: 1
 
       - name: Cache cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
-        uses: actions/cache@v4
+        uses: actions/cache/save@v4
         with:
           path: |
             **/ios/Pods
-          key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock', 'example/ios/Podfile') }}
+          key: ${{ steps.cocoapods-cache.outputs.cache-key }}
 
       - name: Build example for iOS
         run: |
           # Increase verbosity for better debugging
-          yarn turbo run build:ios --cache-dir="${{ env.TURBO_CACHE_DIR }}" -- --verbose
-
-      - name: Verify if Turbo cache was hit
-        run: |
-          echo "Turbo Cache Hit: ${{ env.turbo_cache_hit }}"
+          yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}"
