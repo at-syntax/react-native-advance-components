@@ -141,14 +141,14 @@ jobs:
         run: |
           # Check for Xcode version
           xcodebuild -version
-          # Ensure Xcode 15.4 is selected
-          if ! xcode-select -p | grep -q "Xcode_15.4"; then
-            echo "Installing Xcode 15.4"
+          # Ensure Xcode 16.2 is selected
+          if ! xcode-select -p | grep -q "Xcode_16.2"; then
+            echo "Installing Xcode 16.2"
             sudo gem install xcode-install
-            xcversion install "15.4"
-            sudo xcode-select --switch /Applications/Xcode_15.4.app/Contents/Developer
+            xcversion install "16.2"
+            sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
           else
-            echo "Xcode 15.4 is already selected."
+            echo "Xcode 16.2 is already selected."
           fi
           xcodebuild -version  # Verify that the correct version is being used
       - name: Restore cocoapods
