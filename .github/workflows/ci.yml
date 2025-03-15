@@ -188,3 +188,7 @@ jobs:
         run: |
           # Increase verbosity for better debugging
           yarn turbo run build:ios --cache-dir="${{ env.TURBO_CACHE_DIR }}" -- --verbose
+
+      - name: Verify if Turbo cache was hit
+        run: |
+          echo "Turbo Cache Hit: ${{ env.turbo_cache_hit }}"
