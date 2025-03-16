@@ -131,6 +131,26 @@ jobs:
           if [[ $TURBO_CACHE_STATUS == "HIT" ]]; then
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
           fi
+      - name: Clean Derived Data
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
+          rm -rf ~/Library/Caches/CocoaPods
+          pod cache clean --all
+          echo "Derived data cleaned."
+      - name: Install or Switch Xcode version (if needed)
+        run: |
+          # Check for Xcode version
+          xcodebuild -version
+          # Ensure Xcode 16.2 is selected
+          if ! xcode-select -p | grep -E "Xcode_16.2"; then
+            echo "Installing Xcode 16.2"
+            sudo gem install xcode-install
+            xcversion install "16.2"
+            sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
+          else
+            echo "Xcode 16.2 is already selected."
+          fi
+          xcodebuild -version  # Verify that the correct version is being used
       - name: Restore cocoapods
         if: env.turbo_cache_hit != 1
         id: cocoapods-cache
