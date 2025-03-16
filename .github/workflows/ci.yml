@@ -108,7 +108,7 @@ jobs:
           yarn turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
   build-ios:
-    runs-on: macos-latest
+    runs-on: macos-15
     env:
       TURBO_CACHE_DIR: .turbo/ios
     steps:
@@ -131,26 +131,6 @@ jobs:
           if [[ $TURBO_CACHE_STATUS == "HIT" ]]; then
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
           fi
-      - name: Clean Derived Data
-        run: |
-          rm -rf ~/Library/Developer/Xcode/DerivedData/*
-          rm -rf ~/Library/Caches/CocoaPods
-          pod cache clean --all
-          echo "Derived data cleaned."
-      - name: Install or Switch Xcode version (if needed)
-        run: |
-          # Check for Xcode version
-          xcodebuild -version
-          # Ensure Xcode 16.2 is selected
-          if ! xcode-select -p | grep -E "Xcode(_16\.2|\.app)"; then
-            echo "Installing Xcode 16.2"
-            sudo gem install xcode-install
-            xcversion install "16.2"
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          else
-            echo "Xcode 16.2 is already selected."
-          fi
-          xcodebuild -version  # Verify that the correct version is being used
       - name: Restore cocoapods
         if: env.turbo_cache_hit != 1
         id: cocoapods-cache
