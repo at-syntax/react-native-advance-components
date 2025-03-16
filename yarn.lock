@@ -3087,7 +3087,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@release-it/conventional-changelog@npm:latest":
+"@release-it/conventional-changelog@npm:^10.0.0":
   version: 10.0.0
   resolution: "@release-it/conventional-changelog@npm:10.0.0"
   dependencies:
@@ -4800,7 +4800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-angular@npm:^8.0.0":
+"conventional-changelog-angular@npm:^8.0.0, conventional-changelog-angular@npm:latest":
   version: 8.0.0
   resolution: "conventional-changelog-angular@npm:8.0.0"
   dependencies:
@@ -10863,11 +10863,12 @@ __metadata:
     "@evilmartians/lefthook": ^1.5.0
     "@react-native-community/cli": 15.0.1
     "@react-native/eslint-config": ^0.73.1
-    "@release-it/conventional-changelog": latest
+    "@release-it/conventional-changelog": ^10.0.0
     "@types/jest": ^29.5.5
     "@types/react": ^18.2.44
     "@types/react-native-vector-icons": ^6.4.18
     commitlint: ^17.0.2
+    conventional-changelog-angular: latest
     del-cli: ^5.1.0
     eslint: ^8.51.0
     eslint-config-prettier: ^9.0.0
@@ -10878,7 +10879,7 @@ __metadata:
     react-native: 0.78.0
     react-native-builder-bob: ^0.37.0
     react-native-vector-icons: ^10.2.0
-    release-it: latest
+    release-it: ^18.1.2
     turbo: ^1.10.7
     typescript: ^5.2.2
   peerDependencies:
@@ -11265,7 +11266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"release-it@npm:latest":
+"release-it@npm:^18.1.2":
   version: 18.1.2
   resolution: "release-it@npm:18.1.2"
   dependencies:
