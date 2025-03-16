@@ -142,7 +142,7 @@ jobs:
           # Check for Xcode version
           xcodebuild -version
           # Ensure Xcode 16.2 is selected
-          if ! xcode-select -p | grep -q "Xcode_16.2"; then
+          if ! xcode-select -p | grep -E "Xcode(_16\.2|\.app)"; then
             echo "Installing Xcode 16.2"
             sudo gem install xcode-install
             xcversion install "16.2"
@@ -158,14 +158,14 @@ jobs:
         with:
           path: |
             **/ios/Pods
-          key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock', 'example/ios/Podfile') }}
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-cocoapods-
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
           cd example/ios
-          pod install --repo-update
+          pod install
         env:
           NO_FLIPPER: 1
 
@@ -179,5 +179,4 @@ jobs:
 
       - name: Build example for iOS
         run: |
-          # Increase verbosity for better debugging
-          yarn turbo run build:ios --verbosity 3 --cache-dir="${{ env.TURBO_CACHE_DIR }}"
+          yarn turbo run build:ios --cache-dir="${{ env.TURBO_CACHE_DIR }}"
