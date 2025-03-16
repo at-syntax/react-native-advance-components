@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ViewStyle, ColorValue } from 'react-native';
 import type { SnackbarProps } from './index.type';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

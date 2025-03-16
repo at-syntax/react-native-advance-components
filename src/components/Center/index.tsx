@@ -15,8 +15,11 @@ import type { CenterProps, CenterStateTypes } from './index.type';
  * </Center>
  * ```
  */
-export class Center extends Component<CenterProps, CenterStateTypes> {
-  constructor(props: CenterProps) {
+export class Center extends Component<
+  React.PropsWithChildren<CenterProps>,
+  CenterStateTypes
+> {
+  constructor(props: React.PropsWithChildren<CenterProps>) {
     super(props);
     this.state = {};
   }
