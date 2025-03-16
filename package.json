@@ -1,6 +1,6 @@
 {
   "name": "react-native-advance-components",
-  "version": "0.4.4",
+  "version": "0.4.3",
   "description": "A collection of advanced UI components for React Native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
